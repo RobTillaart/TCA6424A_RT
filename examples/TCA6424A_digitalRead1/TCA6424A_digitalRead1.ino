@@ -2,7 +2,7 @@
 //    FILE: TCA6424A_digitalRead1.ino
 //  AUTHOR: Rob Tillaart
 // PURPOSE: test basic behaviour and performance
-//     URL: https://github.com/RobTillaart/TCA6424A
+//     URL: https://github.com/RobTillaart/TCA6424A_RT
 
 
 #include "TCA6424A.h"

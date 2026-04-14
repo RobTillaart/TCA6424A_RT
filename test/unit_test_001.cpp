@@ -3,7 +3,7 @@
 //  AUTHOR: Rob Tillaart
 //    DATE: 2026-04-13
 // PURPOSE: unit tests for the TCA6424A library
-//     URL: https://github.com/RobTillaart/TCA6424A
+//     URL: https://github.com/RobTillaart/TCA6424A_RT
 //          https://github.com/Arduino-CI/arduino_ci/blob/master/REFERENCE.md
 //
 
