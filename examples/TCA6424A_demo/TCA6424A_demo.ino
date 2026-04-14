@@ -46,7 +46,7 @@ void setup()
 
 void loop(void)
 {
-  uint32_t data = tca.digitalRead16();
+  uint32_t data = tca.digitalRead24();
 
   tca.digitalWrite24(0xFFFFFF);
   delay(500);
