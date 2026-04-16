@@ -16,7 +16,7 @@ Arduino library for TCA6424A I2C 16 bits IO expander.
 
 ## Description
 
-**Experimental - Work in progress.**
+**Experimental**
 
 This file is based upon a copy of the TCA6408A library so it may contain
 a few copy/paste artefacts. 
@@ -189,6 +189,7 @@ pin = 0..23
 #### Must
 
 - improve documentation
+- keep in sync with TCA6408A_RT.
 
 #### Should
 
@@ -198,8 +199,6 @@ pin = 0..23
 - implement RESET support
   - reset pin configuration (begin?)
   - reset pin example
-- add examples 
-  - interrupt example, no handling in library itself
 - improve error handling
   - range checking parameters
   - pass parameter by reference and return error flag.
@@ -207,7 +206,7 @@ pin = 0..23
 #### Could
 
 - add examples
-- add unit tests ?
+- add unit tests
 
 #### Wont
 
