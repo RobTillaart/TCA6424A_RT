@@ -30,41 +30,29 @@ void setup()
   }
 
   //  Set P0–P7 as inputs, P8–P23 as outputs
-  tca.setPinMode24(0x00FFFF);
+  tca.setPinMode24(0x0000FF);
 
   //  Invert INPUT polarity so pressing button == 1
-  tca.setPolarity24(0x00FFFF);
+  tca.setPolarity24(0x0000FF);
 
 
   //  Initialize outputs to OFF
-  tca.digitalWrite24(0x00FFFF);
+  tca.digitalWrite24(0x0000FF);
 
   Serial.print(millis());
-  Serial.println(": config done..");
+  Serial.println(": configuration done..");
 }
 
 
 void loop(void)
 {
-  tca.digitalWrite8(0x0080);
-  delay(500);
-  tca.digitalWrite8(0x0000);
-  delay(500);
-
-  tca.digitalWrite8(0x0040);
-  delay(500);
-  tca.digitalWrite8(0x0000);
-  delay(500);
-
-  tca.digitalWrite8(0x0020);
-  delay(500);
-  tca.digitalWrite8(0x0000);
-  delay(500);
-
-  tca.digitalWrite8(0x0010);
-  delay(500);
-  tca.digitalWrite8(0x0000);
-  delay(500);
+  for (uint32_t mask = 0x800000; mask > 0x000080; mask >>= 1)
+  {
+    tca.digitalWrite24(mask);
+    delay(500);
+    tca.digitalWrite24(0x000000);
+    delay(500);
+  }
 }
 
 
