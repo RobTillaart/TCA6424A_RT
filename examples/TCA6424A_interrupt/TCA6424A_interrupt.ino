@@ -1,5 +1,5 @@
 //
-//    FILE: TCA6424A_digitalRead1.ino
+//    FILE: TCA6424A_interrupt.ino
 //  AUTHOR: Rob Tillaart
 // PURPOSE: test basic behaviour and performance
 //     URL: https://github.com/RobTillaart/TCA6424A_RT
@@ -10,7 +10,17 @@
 
 TCA6424A tca(0x20);
 
+//  interrupt 
+uint8_t IRQpin = 2;
+volatile bool IRQflag = false;
 
+void flag() 
+{
+  IRQflag = true;
+}
+
+
+//////////////////////////////////
 void setup()
 {
   Serial.begin(115200);
@@ -30,29 +40,27 @@ void setup()
   }
 
   //  Set all pins as inputs
-  //  Set all pins to inverted
-  //  setPinMode8() is faster, this shows how it can be done per pin.
-  for (int pin = 0; pin < 24; pin++)
-  {
-    tca.setPinMode1(pin, 1);
-    tca.setPolarity1(pin, 1);
-  }
-
+  tca.setPinMode24(0xFFFFFF);
+  tca.setPolarity24(0xFFFFFF);
   Serial.print(millis());
   Serial.println(": config done..");
+
+  pinMode(IRQpin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(IRQpin), flag, FALLING);
 }
 
 
 void loop(void)
 {
-  Serial.print(millis());
-  Serial.print(": \t");
-  for (int pin = 23; pin > -1; pin--)
+  //  if IRQ has set the flag, print new values.
+  if (IRQflag == true)
   {
-    Serial.print(tca.digitalRead1(pin) ? 1 : 0);
-    delay(100);
+    uint32_t value = tca.digitalRead24();
+    Serial.print(millis());
+    Serial.print(": \t");
+    Serial.println(value, HEX);
+    IRQflag = false;
   }
-  Serial.println();
 }
 
 

@@ -1,15 +1,19 @@
 //
-//    FILE: TCA6424A_digitalRead1.ino
+//    FILE: TCA6424A_knight_rider.ino
 //  AUTHOR: Rob Tillaart
 // PURPOSE: test basic behaviour and performance
 //     URL: https://github.com/RobTillaart/TCA6424A_RT
-
+//
+//  connect 24 LEDs to the 24 pins with appropriate resistors.
 
 #include "TCA6424A.h"
 
 
 TCA6424A tca(0x20);
 
+int pin = 0;
+int direction = 1;
+uint32_t lastTime = 0;
 
 void setup()
 {
@@ -29,14 +33,10 @@ void setup()
     while (1);
   }
 
-  //  Set all pins as inputs
-  //  Set all pins to inverted
-  //  setPinMode8() is faster, this shows how it can be done per pin.
-  for (int pin = 0; pin < 24; pin++)
-  {
-    tca.setPinMode1(pin, 1);
-    tca.setPolarity1(pin, 1);
-  }
+  //  Set all pins as outputs
+  tca.setPinMode24(0x000000);
+  //  Set all pins to OFF
+  tca.digitalWrite24(0x000000);
 
   Serial.print(millis());
   Serial.println(": config done..");
@@ -45,14 +45,19 @@ void setup()
 
 void loop(void)
 {
-  Serial.print(millis());
-  Serial.print(": \t");
-  for (int pin = 23; pin > -1; pin--)
+  if (millis() - lastTime >= 125)
   {
-    Serial.print(tca.digitalRead1(pin) ? 1 : 0);
-    delay(100);
+    lastTime = millis();
+    int prevPin = pin;
+    //  need to flip direction?
+    if (pin >= 23 || pin <= 0) direction = -direction;
+    pin = pin + direction;
+    //  adjust active led
+    tca.digitalWrite1(pin, 1);
+    tca.digitalWrite1(prevPin, 0);
   }
-  Serial.println();
+
+  //  other tasks
 }
 
 

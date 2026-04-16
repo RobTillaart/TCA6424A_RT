@@ -152,7 +152,7 @@ TODO: create and run performance sketch on hardware.
 ### PinMode
 
 mask = 0x000000..0xFFFFFF 
-pin = 0..24  
+pin = 0..23  
 
 - **void setPinMode24(uint32_t mask)** per bit 1 = INPUT 0 = OUTPUT.
 - **uint32_t getPinMode24()** returns set mask.
@@ -162,7 +162,7 @@ pin = 0..24
 ### Polarity
 
 mask = 0x000000..0xFFFFFF 
-pin = 0..24  
+pin = 0..23  
 
 - **void setPolarity24(uint32_t mask)** per bit 1 = inverted, 0 = normal.
 - **uint32_t getPolarity24()** returns set mask.
@@ -172,7 +172,7 @@ pin = 0..24
 ### Core IO
 
 mask = 0x000000..0xFFFFFF 
-pin = 0..24  
+pin = 0..23  
 
 - **void digitalWrite24(uint32_t mask)** write all pins at once.
 - **uint32_t digitalRead24()** read all pins at once.
@@ -189,11 +189,25 @@ pin = 0..24
 #### Must
 
 - improve documentation
-- keep in sync with TCA6408A (see there).
 
 #### Should
 
+- investigate optimization 
+  - multi-read without setting register again
+  - cache register values (not in 0.1.x)
+- implement RESET support
+  - reset pin configuration (begin?)
+  - reset pin example
+- add examples 
+  - interrupt example, no handling in library itself
+- improve error handling
+  - range checking parameters
+  - pass parameter by reference and return error flag.
+
 #### Could
+
+- add examples
+- add unit tests ?
 
 #### Wont
 
